@@ -1,3 +1,150 @@
+// Basic variables (adjust to your theme)
+$login-max-width: 420px;
+$card-bg: #ffffff;
+$brand-color: #276ef1;
+$muted: #6b7280;
+$border: #e5e7eb;
+$shadow: 0 6px 18px rgba(18, 23, 38, 0.08);
+$radius: 12px;
+$gap: 16px;
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  background: linear-gradient(180deg, #f6f8ff 0%, #ffffff 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: $login-max-width;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  padding: 28px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Title & subtitle */
+.login-title {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.login-subtitle {
+  margin: 0 0 20px;
+  color: $muted;
+  font-size: 0.95rem;
+}
+
+/* Flash messages */
+.flash {
+  margin: 12px auto;
+  max-width: $login-max-width;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  &--alert {
+    background: #fff5f5;
+    color: #7f1d1d;
+    border: 1px solid #fee2e2;
+  }
+  &--notice {
+    background: #f0fdf4;
+    color: #14532d;
+    border: 1px solid #bbf7d0;
+  }
+}
+
+/* Form */
+.login-form {
+  .form-group {
+    margin-bottom: $gap;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #374151;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid $border;
+    border-radius: 8px;
+    transition: box-shadow .15s ease, border-color .15s ease;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(39, 110, 241, 0.08);
+    }
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  .form-actions {
+    margin-top: 8px;
+
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      border: none;
+    }
+
+    .btn-primary {
+      background: $brand-color;
+      color: #fff;
+      box-shadow: 0 6px 18px rgba(39, 110, 241, 0.12);
+
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+}
+
+/* Footer links */
+.login-footer {
+  margin-top: 18px;
+  text-align: center;
+  .login-link {
+    color: $brand-color;
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .login-title { font-size: 1.25rem; }
+}
+
+/* Small helper: original selectors if you referenced IDs directly */
 input#email_address, input#password {
-    width: 300px;
+  max-width: 100%;
 }
