@@ -1,0 +1,126 @@
+// user-specific styles (complementary to _login.scss)
+$card-bg: #ffffff;
+$brand-color: #276ef1;
+$muted: #6b7280;
+$border: #e5e7eb;
+$shadow: 0 6px 18px rgba(18, 23, 38, 0.06);
+$radius: 12px;
+$gap: 16px;
+$max-width: 720px;
+
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 16px;
+  background: linear-gradient(180deg, #fafbff 0%, #ffffff 100%);
+}
+
+.signup-card {
+  width: 100%;
+  max-width: $max-width;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: $radius;
+  box-shadow: $shadow;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+/* Titles */
+.signup-title {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Form errors */
+.form-errors {
+  background: #fff5f5;
+  border: 1px solid #fee2e2;
+  color: #7f1d1d;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 0.95rem;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+}
+
+/* Form layout */
+.signup-form {
+  .two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $gap;
+  }
+
+  .form-row {
+    margin-bottom: $gap;
+  }
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #374151;
+  }
+
+  .form-control {
+    width: 92%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border: 1px solid $border;
+    border-radius: 8px;
+    transition: box-shadow .12s ease, border-color .12s ease;
+  }
+
+  .field-error {
+    margin-top: 6px;
+    color: #b91c1c;
+    font-size: 0.875rem;
+  }
+
+  .form-actions {
+    margin-top: 8px;
+
+    .btn {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: $brand-color;
+      color: white;
+      box-shadow: 0 6px 18px rgba(39, 110, 241, 0.12);
+      font-size: 1.25rem;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .signup-form .two-cols {
+    grid-template-columns: 1fr;
+  }
+  .signup-card {
+    padding: 20px;
+  }
+}
