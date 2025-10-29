@@ -96,9 +96,10 @@ $max-width: 720px;
 
   .form-actions {
     margin-top: 8px;
-
+    text-align: center;
     .btn {
       width: 100%;
+      max-width: 300px;
       padding: 10px 14px;
       border-radius: 8px;
       font-weight: 600;
@@ -122,5 +123,125 @@ $max-width: 720px;
   }
   .signup-card {
     padding: 20px;
+  }
+}
+
+/* user card styles (complements _user.scss/_login.scss) */
+.user-card {
+  background: #ffffff;
+  border: 1px solid #e6e8eb;
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(18, 23, 38, 0.03);
+  box-sizing: border-box;
+}
+
+.user-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .user-title { display: flex; flex-direction: column; }
+  .user-name {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #111827;
+  }
+  .user-id {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+}
+
+/* attribute grid */
+.user-attributes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+
+  .attr {
+    display: contents; // allow dt/dd to be grid items
+  }
+
+  dt {
+    font-size: 0.85rem;
+    color: #374151;
+    margin: 0 0 4px;
+  }
+
+  dd {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    color: #111827;
+    word-break: break-word;
+  }
+}
+
+/* single-column on small screens */
+@media (max-width: 640px) {
+  .user-attributes {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* actions */
+.user-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+
+  .btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid #d1d5db;
+    color: #111827;
+  }
+
+  .btn-primary {
+    background: #276ef1;
+    color: #ffffff;
+    border: none;
+  }
+
+  .btn-danger {
+    background: #ef4444;
+    color: #fff;
+    border: none;
+    font-size: 1.25rem;
+    height: 100%;
+  }
+}
+
+/* form enhancements for user form */
+.signup-form .form-meta {
+  margin-top: 12px;
+  .signup-link {
+    color: $brand-color;
+    text-decoration: none;
+    font-weight: 500;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+#users {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  .user-card {
+    flex: 0 0 calc(33% - 10px);
   }
 }

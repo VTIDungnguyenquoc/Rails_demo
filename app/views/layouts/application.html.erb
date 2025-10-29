@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Rails Demo" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -23,6 +22,23 @@
   </head>
 
   <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <title><%= content_for(:title) || "Rails Demo" %></title>
+        </div>
+
+        <%# Logout area - only show when user is logged in %>
+        <% if authenticated? %>
+          <h1><%= content_for(:title) || "Rails Demo" %></h1>
+          <div class="topbar-actions" role="navigation" aria-label="User">
+            <%# Use button_to to send DELETE to sessions#destroy (adjust path name if different) %>
+            <%= button_to "Logout", session_path, method: :delete, class: "btn btn-logout", form: { "data-turbo" => "false" } %>
+          </div>
+        <% end %>
+      </div>
+    </header>
+
     <%= yield %>
   </body>
 </html>

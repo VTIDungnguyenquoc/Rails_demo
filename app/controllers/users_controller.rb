@@ -43,6 +43,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: "User was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @user }
       else
+        flash.now[:alert] = "There were errors update the account."
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end

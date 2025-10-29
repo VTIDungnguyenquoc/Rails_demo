@@ -1,17 +1,97 @@
-<%= form_with(model: user) do |form| %>
+<%= form_with(model: user, local: true, html: { class: "signup-form", autocomplete: "on" }) do |f| %>
   <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+    <div class="form-errors" role="alert">
+      <h2><%= pluralize(user.errors.count, "error") %> prevented this user from being saved:</h2>
       <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-row two-cols">
+    <div class="form-group">
+      <%= f.label :first_name, "First name", class: "form-label" %>
+      <%= f.text_field :first_name, class: "form-control", required: true, placeholder: "Given name" %>
+      <% if user.errors[:first_name].present? %>
+        <div class="field-error"><%= user.errors[:first_name].first %></div>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :last_name, "Last name", class: "form-label" %>
+      <%= f.text_field :last_name, class: "form-control", required: true, placeholder: "Family name" %>
+      <% if user.errors[:last_name].present? %>
+        <div class="field-error"><%= user.errors[:last_name].first %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :email_address, "Email address", class: "form-label" %>
+      <%= f.email_field :email_address, class: "form-control", required: true, autocomplete: "email", placeholder: "you@example.com" %>
+      <% if user.errors[:email_address].present? %>
+        <div class="field-error"><%= user.errors[:email_address].first %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-row two-cols">
+    <div class="form-group">
+      <%= f.label :age, "Age", class: "form-label" %>
+      <%= f.number_field :age, class: "form-control", required: true, min: 0, step: 1, placeholder: "e.g. 28" %>
+      <% if user.errors[:age].present? %>
+        <div class="field-error"><%= user.errors[:age].first %></div>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :sex, "Sex", class: "form-label" %>
+      <%= f.select :sex,
+            options_for_select([['Prefer not to say', 0], ['Male', 1], ['Female', 2]], selected: user.sex),
+            { include_blank: 'Select' },
+            class: "form-control",
+            required: true %>
+      <% if user.errors[:sex].present? %>
+        <div class="field-error"><%= user.errors[:sex].first %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-row two-cols">
+    <div class="form-group">
+      <%= f.label :password, "Password", class: "form-label" %>
+      <%= f.password_field :password,
+            class: "form-control",
+            placeholder: (user.persisted? ? "Leave blank to keep current password" : "Enter new password"),
+            autocomplete: user.persisted? ? "new-password" : "new-password",
+            maxlength: 72,
+            required: !user.persisted? %>
+      <% if user.errors[:password].present? %>
+        <div class="field-error"><%= user.errors[:password].first %></div>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Confirm password", class: "form-label" %>
+      <%= f.password_field :password_confirmation,
+            class: "form-control",
+            placeholder: (user.persisted? ? "Leave blank to keep current password" : "Repeat password"),
+            autocomplete: user.persisted? ? "new-password" : "new-password",
+            maxlength: 72 %>
+      <% if user.errors[:password_confirmation].present? %>
+        <div class="field-error"><%= user.errors[:password_confirmation].first %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit(user.persisted? ? "Update account" : "Create account", class: "btn btn-primary") %>
+  </div>
+
+  <div class="form-meta" style="margin-top:12px; text-align:center;">
+    <%= link_to "Back", user_path(user), class: "signup-link" %>
   </div>
 <% end %>

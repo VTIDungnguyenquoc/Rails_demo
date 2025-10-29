@@ -1,3 +1,42 @@
 // Entry point for your Sass build
 @use "login";
 @use "user";
+
+/* topbar */
+.topbar {
+  border-bottom: 1px solid #e6e8eb;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  .topbar-inner {
+    margin: 0;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* button produced by button_to is inside a form; target the button */
+  .btn-logout {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #276ef1;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .btn-logout:hover {
+    background: rgba(39,110,241,0.06);
+  }
+}

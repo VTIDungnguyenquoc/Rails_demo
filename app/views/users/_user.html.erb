@@ -1,2 +1,47 @@
-<div id="<%= dom_id user %>">
+<div id="<%= dom_id user %>" class="user-card">
+  <div class="user-card-header">
+    <div class="user-title">
+      <h3 class="user-name"><%= [user.first_name, user.last_name].compact.join(' ').presence || "User ##{user.id}" %></h3>
+      <div class="user-id">ID: <%= user.id %></div>
+    </div>
+  </div>
+
+  <dl class="user-attributes">
+    <div class="attr">
+      <dt>Email</dt>
+      <dd><%= user.email_address.presence || '-' %></dd>
+    </div>
+
+    <div class="attr">
+      <dt>Age</dt>
+      <dd><%= user.age.presence || '-' %></dd>
+    </div>
+
+    <div class="attr">
+      <dt>Sex</dt>
+      <dd><%= user.sex.presence || '-' %></dd>
+    </div>
+
+    <div class="attr">
+      <dt>Created</dt>
+      <dd><%= user.created_at ? l(user.created_at, format: :long) : '-' %></dd>
+    </div>
+
+    <div class="attr">
+      <dt>Updated</dt>
+      <dd><%= user.updated_at ? l(user.updated_at, format: :long) : '-' %></dd>
+    </div>
+  </dl>
+
+  <div class="user-actions">
+    <% if defined?(show_back) && show_back %>
+        <%= link_to 'Back', users_path, class: 'btn btn-outline' %>
+    <% else %>
+        <%= link_to 'Show', user_path(user), class: 'btn btn-outline' %>
+    <% end %>
+    <% if Current.session[:user_id] == user.id %>
+        <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-primary' %>
+        <%= button_to "Delete", user_path(user), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+    <% end %>
+  </div>
 </div>
