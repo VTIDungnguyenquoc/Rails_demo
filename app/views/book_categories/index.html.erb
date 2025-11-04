@@ -1,0 +1,46 @@
+<%# Page title %>
+<% content_for :title, "Book categories" %>
+
+<%# Notice / flash %>
+<% if notice.present? %>
+  <div class="bc-notice" role="status" aria-live="polite"><%= notice %></div>
+<% end %>
+
+<header class="bc-header">
+  <div class="bc-header-left">
+    <h1 class="bc-title">Book categories</h1>
+    <p class="bc-subtitle">Browse and manage your book categories</p>
+  </div>
+
+  <div class="bc-header-actions">
+    <div class="bc-search">
+      <%= form_with url: book_categories_path, method: :get, local: true, html: { id: "bc-search-form", class: "bc-search-form" } do %>
+        <%= search_field_tag :keyword, params[:keyword], placeholder: "Search categories...", aria: { label: "Search categories" }, id: "bc-search-input", class: "bc-search-input" %>
+      <% end %>
+    </div>
+
+    <div class="bc-actions">
+      <%= link_to "New category", new_book_category_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</header>
+
+<main class="bc-main">
+  <% if @book_categories.any? %>
+    <div class="bc-grid" id="book_categories">
+      <%= render @book_categories %>
+    </div>
+  <% else %>
+    <div class="bc-empty">
+      <p class="bc-empty-title">No categories found</p>
+      <% if @q.present? %>
+        <p class="bc-empty-sub">No categories match "<strong><%= h @q %></strong>". Try another search.</p>
+      <% else %>
+        <p class="bc-empty-sub">Create your first book category to get started.</p>
+      <% end %>
+      <%= link_to "Create category", new_book_category_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</main>
+
+<%= javascript_import_module_tag 'controllers/book_category' %>

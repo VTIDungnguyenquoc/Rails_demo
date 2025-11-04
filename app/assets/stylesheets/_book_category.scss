@@ -1,0 +1,197 @@
+// Book category list styling
+$bc-max-width: 1100px;
+$bc-gap: 20px;
+$bc-card-bg: #ffffff;
+$bc-border: #e6e8eb;
+$bc-shadow: 0 6px 18px rgba(18, 23, 38, 0.04);
+$bc-radius: 10px;
+$brand-color: #276ef1;
+$muted: #6b7280;
+
+.bc-notice {
+  max-width: $bc-max-width;
+  margin: 16px auto;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #f0fdf4;
+  color: #14532d;
+  border: 1px solid #bbf7d0;
+  font-weight: 500;
+}
+
+/* Header */
+.bc-header {
+  max-width: $bc-max-width;
+  margin: 18px auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bc-header-left {
+  .bc-title {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #111827;
+    font-weight: 700;
+  }
+  .bc-subtitle {
+    margin: 6px 0 0;
+    color: $muted;
+    font-size: 0.95rem;
+  }
+}
+
+.bc-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .bc-search {
+    .bc-search-input {
+      padding: 8px 12px;
+      border: 1px solid $bc-border;
+      border-radius: 8px;
+      min-width: 220px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .bc-actions .btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: $brand-color;
+    color: #fff;
+    border: none;
+  }
+}
+
+/* Main grid */
+.bc-main {
+  max-width: $bc-max-width;
+  margin: 12px auto 36px;
+  padding: 0 16px;
+}
+
+.bc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: $bc-gap;
+}
+
+/* Card base used by partial */
+.bc-card {
+  background: $bc-card-bg;
+  border: 1px solid $bc-border;
+  border-radius: $bc-radius;
+  box-shadow: $bc-shadow;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 140px;
+  box-sizing: border-box;
+
+  .bc-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 6px;
+  }
+
+  .bc-card-meta {
+    color: $muted;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .bc-card-desc {
+    color: #111827;
+    font-size: 0.95rem;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bc-card-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid $bc-border;
+    color: #111827;
+  }
+
+  .btn-primary {
+    background: $brand-color;
+    color: #fff;
+    border: none;
+  }
+}
+
+/* Empty state */
+.bc-empty {
+  text-align: center;
+  padding: 36px;
+  border: 1px dashed $bc-border;
+  border-radius: $bc-radius;
+  color: $muted;
+
+  .bc-empty-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .bc-empty-sub {
+    margin-bottom: 12px;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .bc-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .bc-header-actions {
+    width: 100%;
+    justify-content: space-between;
+
+    .bc-search { flex: 1; margin-right: 8px; }
+  }
+}
+
+.bc-search-input {
+  padding: 8px 12px;
+  border: 1px solid $bc-border;
+  border-radius: 8px;
+  min-width: 220px;
+  font-size: 0.95rem;
+}
+
+/* Highlight for matches inserted by Rails highlight helper */
+.ruby-highlight {
+  background: #fff7cc;
+  padding: 0 4px;
+  border-radius: 3px;
+}
