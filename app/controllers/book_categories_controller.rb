@@ -73,7 +73,7 @@ class BookCategoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_category_params
-      params.expect(book_category: [ :name ])
+      params.require(:book_category).permit(:name, :description, :image_url)
     end
 end
 

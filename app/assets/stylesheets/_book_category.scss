@@ -1,4 +1,4 @@
-// Book category list styling
+// Book category list styling (cleaned & adjusted)
 $bc-max-width: 1100px;
 $bc-gap: 20px;
 $bc-card-bg: #ffffff;
@@ -8,6 +8,7 @@ $bc-radius: 10px;
 $brand-color: #276ef1;
 $muted: #6b7280;
 
+/* Notice */
 .bc-notice {
   max-width: $bc-max-width;
   margin: 16px auto;
@@ -28,97 +29,115 @@ $muted: #6b7280;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-}
 
-.bc-header-left {
-  .bc-title {
-    margin: 0;
-    font-size: 1.6rem;
-    color: #111827;
-    font-weight: 700;
-  }
-  .bc-subtitle {
-    margin: 6px 0 0;
-    color: $muted;
-    font-size: 0.95rem;
-  }
-}
-
-.bc-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  .bc-search {
-    .bc-search-input {
-      padding: 8px 12px;
-      border: 1px solid $bc-border;
-      border-radius: 8px;
-      min-width: 220px;
-      font-size: 0.95rem;
-    }
+  .bc-header-left {
+    .bc-title { margin: 0; font-size: 1.6rem; color: #111827; font-weight: 700; }
+    .bc-subtitle { margin: 6px 0 0; color: $muted; font-size: 0.95rem; }
   }
 
-  .bc-actions .btn {
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-  }
+  .bc-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 
-  .btn-primary {
-    background: $brand-color;
-    color: #fff;
-    border: none;
+    .bc-search { .bc-search-input { @extend .bc-search-input; } }
+
+    .bc-actions .btn { padding: 8px 12px; border-radius: 8px; font-weight: 600; }
+    .btn-primary { background: $brand-color; color: #fff; border: none; }
   }
 }
 
-/* Main grid */
-.bc-main {
-  max-width: $bc-max-width;
-  margin: 12px auto 36px;
-  padding: 0 16px;
-}
+/* Main & grid */
+.bc-main { max-width: $bc-max-width; margin: 12px auto 36px; padding: 0 16px; }
+/* Use flexible column sizing while preserving gap; min column width 240px */
+.bc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(33% - $bc-gap), 1fr)); gap: $bc-gap; }
 
-.bc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: $bc-gap;
-}
-
-/* Card base used by partial */
-.bc-card {
-  background: $bc-card-bg;
+/* Reusable search input */
+.bc-search-input {
+  padding: 8px 12px;
   border: 1px solid $bc-border;
+  border-radius: 8px;
+  min-width: 220px;
+  font-size: 0.95rem;
+}
+
+/* Highlight helper */
+.ruby-highlight, mark { background: #fff7cc; padding: 0 4px; border-radius: 3px; }
+
+/* Card */
+.bc-card {
+  position: relative;
+  box-sizing: border-box;
   border-radius: $bc-radius;
+  overflow: hidden;
   box-shadow: $bc-shadow;
-  padding: 16px;
+  border: 1px solid $bc-border;
+  max-height: 300px; /* <-- enforce card maximum height across variants */
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 140px;
-  box-sizing: border-box;
 
-  .bc-card-title {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #0f172a;
-    margin: 0 0 6px;
+  /* Background-image variant uses inline style on article */
+  &.bc-card--bg {
+    background-color: transparent;
+    color: #fff;
+    display: flex;
+    align-items: flex-end; /* content sits at bottom */
+    background-size: contain;
   }
 
+  /* No-image variant: keep default padding */
+  &.bc-card--no-image {
+    background: $bc-card-bg;
+    color: #111827;
+  }
+
+  /* Decorative overlay for background images (contrast) */
+  .bc-card-overlay {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.42) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Body sits above overlay; ensure body area scroll/clamp sits inside max-height */
+  .bc-card-body {
+    position: relative;
+    z-index: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    /* keep body from forcing the card taller than max-height: allow overflow to be hidden */
+    overflow: hidden;
+  }
+
+  .bc-card-title { font-size: 1.05rem; font-weight: 600; margin: 0; }
   .bc-card-meta {
     color: $muted;
     font-size: 0.9rem;
-    margin-bottom: 8px;
   }
 
+  /* Description: break long words and hide overflow after the allowed space */
   .bc-card-desc {
-    color: #111827;
     font-size: 0.95rem;
-    flex: 1;
+    line-height: 1.4;
+    margin-bottom: 8px;
+
+    /* Break words aggressively when necessary (prevents overflow) */
+    overflow-wrap: anywhere;
+    word-break: break-all;
+
+    /* Multiline clamp for consistent height inside the max-height card */
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* show up to 4 lines */
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
+    }
 
   .bc-card-actions {
     display: flex;
@@ -126,25 +145,36 @@ $muted: #6b7280;
     align-items: center;
   }
 
-  .btn {
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
+  .btn { padding: 6px 10px; border-radius: 8px; font-weight: 600; font-size: 0.9rem; }
+  .btn-outline { background: transparent; border: 1px solid $bc-border; color: #111827; }
+  .btn-primary { background: $brand-color; color: #fff; border: none; }
 
-  .btn-outline {
-    background: transparent;
-    border: 1px solid $bc-border;
-    color: #111827;
-  }
+  /* Style adjustments for bg variant (white text/softer buttons) */
+  &.bc-card--bg {
+    .bc-card-title,
+    .bc-card-desc,
+    .bc-card-meta { color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.6); }
 
-  .btn-primary {
-    background: $brand-color;
-    color: #fff;
-    border: none;
+    .bc-card-actions .btn-outline {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.18);
+      color: #fff;
+    }
+
+    .bc-card-actions .btn-primary {
+      background: rgba(255,255,255,0.14);
+      color: #fff;
   }
+}
+
+  /* Hover uplift for background visuals */
+  &:hover {
+    .bc-card-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.46) 100%); }
+  }
+@media (max-width: 640px) {
+    max-height: 160px;
+    &.bc-card--bg { min-height: 0; }
+}
 }
 
 /* Empty state */
@@ -155,43 +185,16 @@ $muted: #6b7280;
   border-radius: $bc-radius;
   color: $muted;
 
-  .bc-empty-title {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .bc-empty-sub {
-    margin-bottom: 12px;
-  }
+  .bc-empty-title { font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+  .bc-empty-sub { margin-bottom: 12px; }
 }
+
+/* Form note */
+.form-note { margin: 6px 0 0; font-size: 0.85rem; color: $muted; }
 
 /* Responsive tweaks */
 @media (max-width: 640px) {
-  .bc-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .bc-header-actions {
-    width: 100%;
-    justify-content: space-between;
-
-    .bc-search { flex: 1; margin-right: 8px; }
-  }
-}
-
-.bc-search-input {
-  padding: 8px 12px;
-  border: 1px solid $bc-border;
-  border-radius: 8px;
-  min-width: 220px;
-  font-size: 0.95rem;
-}
-
-/* Highlight for matches inserted by Rails highlight helper */
-.ruby-highlight {
-  background: #fff7cc;
-  padding: 0 4px;
-  border-radius: 3px;
+  .bc-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .bc-header-actions { width: 100%; justify-content: space-between; .bc-search { flex: 1; margin-right: 8px; } }
+  .bc-grid { gap: 14px; }
 }

@@ -1,13 +1,29 @@
-<article class="bc-card" id="<%= dom_id(book_category) %>">
-  <h3 class="bc-card-title"><%= highlight(book_category.name, params[:keyword]) %></h3>
+<%# article uses image_url as background when present %>
+<% image_url = book_category.image_url.to_s.strip.presence %>
+<article
+  class="bc-card <%= image_url ? 'bc-card--bg' : 'bc-card--no-image' %>"
+  id="<%= dom_id(book_category) %>"
+  <% if image_url %> style="background-image: url('<%= h(image_url) %>');" <% end %>
+  role="group"
+  aria-label="<%= h(book_category.name) %>"
+>
+  <%# Decorative overlay for contrast (aria-hidden) %>
+  <span class="bc-card-overlay" aria-hidden="true"></span>
 
-  <% if book_category.created_at.present? %>
-    <div class="bc-card-meta">Created: <%= l(book_category.created_at.in_time_zone('Asia/Ho_Chi_Minh'), format: :short) %></div>
-  <% end %>
+  <div class="bc-card-body">
+    <h3 class="bc-card-title"><%= highlight(book_category.name, params[:keyword]) %></h3>
 
-  <div class="bc-card-actions">
-    <%= link_to "Show", book_category_path(book_category), class: "btn btn-outline" %>
-    <%= link_to "Edit", edit_book_category_path(book_category), class: "btn btn-primary" %>
+    <% if book_category.created_at.present? %>
+      <div class="bc-card-meta">Created: <%= l(book_category.created_at.in_time_zone('Asia/Ho_Chi_Minh'), format: :short) %></div>
+    <% end %>
+
+    <% if book_category.description.present? %>
+      <div class="bc-card-desc"><%= simple_format(truncate(book_category.description, length: 200)) %></div>
+    <% end %>
+
+    <div class="bc-card-actions">
+      <%= link_to "Show", book_category_path(book_category), class: "btn btn-outline" %>
+      <%= link_to "Edit", edit_book_category_path(book_category), class: "btn btn-primary" %>
+    </div>
   </div>
 </article>
-

@@ -33,8 +33,8 @@
   <% else %>
     <div class="bc-empty">
       <p class="bc-empty-title">No categories found</p>
-      <% if @q.present? %>
-        <p class="bc-empty-sub">No categories match "<strong><%= h @q %></strong>". Try another search.</p>
+      <% if @keyword.present? %>
+        <p class="bc-empty-sub">No categories match "<strong><%= h @keyword %></strong>". Try another search.</p>
       <% else %>
         <p class="bc-empty-sub">Create your first book category to get started.</p>
       <% end %>

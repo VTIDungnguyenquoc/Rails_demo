@@ -1,21 +1,39 @@
-<%= form_with(model: book_category) do |form| %>
+<%= form_with(model: book_category, local: true, html: { class: "bc-form" }) do |f| %>
   <% if book_category.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(book_category.errors.count, "error") %> prohibited this book_category from being saved:</h2>
-
+    <div class="form-errors" role="alert">
+      <h2><%= pluralize(book_category.errors.count, "error") %> prevented this book category from being saved:</h2>
       <ul>
-        <% book_category.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% book_category.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :name, class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", required: true %>
+    </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :description, class: "form-label" %>
+      <%= f.text_area :description, class: "form-control", rows: 4, placeholder: "Short description (optional)" %>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <%= f.label :image_url, "Image URL", class: "form-label" %>
+      <%= f.url_field :image_url, class: "form-control", placeholder: "https://example.com/image.jpg" %>
+      <p class="form-note">Provide a direct image URL (jpg, png). Leave blank to use the default card style.</p>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit book_category.persisted? ? "Update category" : "Create category", class: "btn btn-primary" %>
+    <%= link_to "Back", book_categories_path, class: "btn btn-outline", style: "margin-left:8px" %>
   </div>
 <% end %>
